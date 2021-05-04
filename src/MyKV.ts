@@ -22,12 +22,12 @@ class MyKV {
             );
     }
 
-    get open() {
+    get open(): boolean {
         const v = this.#connection?.pool?._closed;
         return v == undefined ? false : !v;
     }
 
-    async get(key: string) {
+    async get(key: string): Promise<any> {
         const [rows] = await this.#connection.execute(
             `SELECT * FROM ${this.#options.table} WHERE \`key\` = ? LIMIT 1`,
             [key],
@@ -37,7 +37,7 @@ class MyKV {
         return parse(rows[0].value).data;
     }
 
-    async set(key: string, value: any) {
+    async set(key: string, value: any): Promise<void> {
         await this.#connection.execute(
             `INSERT IGNORE INTO ${
                 this.#options.table
@@ -46,19 +46,19 @@ class MyKV {
         );
     }
 
-    async del(key: string) {
+    async del(key: string): Promise<void> {
         await this.#connection.execute(
             `DELETE FROM ${this.#options.table} WHERE \`key\` = ?`,
             [key],
         );
     }
 
-    close() {
+    close(): void {
         if (!this.open) throw new Error('Connection is already closed');
         this.#connection.end();
     }
 
-    async connect() {
+    async connect(): Promise<void> {
         if (this.open) throw new Error('Connection is already open');
 
         // Connect
