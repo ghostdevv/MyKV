@@ -25,7 +25,7 @@ test('setting and getting a value', async () => {
     db.close();
 });
 
-test('deleting a value', async () => {
+test('db.del', async () => {
     await db.connect();
 
     await db.set('test', true);
@@ -33,6 +33,21 @@ test('deleting a value', async () => {
 
     const v = await db.get('test');
     if (v !== undefined) throw new Error('Failed');
+
+    db.close();
+});
+
+test('db.has', async () => {
+    await db.connect();
+
+    await db.set('test', 'yes');
+    const res1 = await db.has('test');
+
+    await db.del('test');
+    const res2 = await db.has('test');
+
+    assert.is(res1, true);
+    assert.is(res2, false);
 
     db.close();
 });
