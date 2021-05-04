@@ -106,4 +106,24 @@ test('db.values', async () => {
     assert.equal(limitValues, [true]);
 });
 
+test('db.entries', async () => {
+    await db.connect();
+
+    await db.clear();
+    await db.set('test', true);
+    await db.set('test2', false);
+
+    const entries = await db.entries();
+    const limitEntries = await db.entries(1);
+
+    db.close();
+
+    assert.equal(entries, [
+        ['test', true],
+        ['test2', false],
+    ]);
+
+    assert.equal(limitEntries, [['test', true]]);
+});
+
 test.run();

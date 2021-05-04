@@ -103,6 +103,16 @@ These are the methods used on your created db
     const tenValues = await db.values(10); // Optional limit
     ```
 
+-   ### Entries
+
+    `await db.entries(limit?: number);`<br />
+    Returns all keys and values in an array, like [Map.prototype.entries](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Map/entries)<br />
+
+    ```js
+    const entries = await db.entries();
+    const tenEntries = await db.entries(10); // Optional limit
+    ```
+
 -   ## Support
     -   Message me on discord: `GHOST#7524`<br>
     -   Join the [discord](https://discord.gg/2Vd4wAjJnm)<br>

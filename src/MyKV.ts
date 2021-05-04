@@ -111,6 +111,20 @@ class MyKV {
         return res.map(({ value }: { value: any }) => parse(value).data);
     }
 
+    async entries(limit: number): Promise<IterableIterator<[any, any]>> {
+        if (limit && isNaN(limit))
+            throw new TypeError('The limit must be a number');
+
+        const [res] = await this.#query.execute(
+            'SELECT * from :table' + (!isNaN(limit) ? ` LIMIT ${limit}` : ''),
+        );
+
+        return res.map(({ key, value }: { key: string; value: any }) => [
+            key,
+            parse(value).data,
+        ]);
+    }
+
     close(): void {
         if (!this.open) throw new Error('Connection is already closed');
         this.#connection.end();
