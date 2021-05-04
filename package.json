@@ -1,6 +1,6 @@
 {
     "name": "mykv",
-    "version": "0.0.1",
+    "version": "0.1.1",
     "main": "dist/MyKV.js",
     "scripts": {
         "dev": "run-p dev:*",
