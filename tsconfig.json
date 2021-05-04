@@ -1,10 +1,19 @@
 {
     "compilerOptions": {
-        "target": "es6",
+        "target": "es2020",
         "module": "commonjs",
+        "outDir": "./dist",
+
         "strict": true,
         "declaration": true,
-        "outDir": "./dist"
+        "removeComments": true,
+        "strictNullChecks": true,
+        "noImplicitReturns": true,
+        "noImplicitThis": true,
+        "noImplicitAny": true,
+        "esModuleInterop": true,
+        "forceConsistentCasingInFileNames": true
     },
+    "include": ["src/**/*.ts"],
     "exclude": ["tests", "dist", "dev", "node_modules"]
 }
