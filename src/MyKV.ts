@@ -53,7 +53,7 @@ class MyKV {
         );
     }
 
-    async close() {
+    close() {
         if (!this.open) throw new Error('Connection is already closed');
         this.#connection.end();
     }
