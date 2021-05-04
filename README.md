@@ -83,6 +83,16 @@ These are the methods used on your created db
     await db.clear();
     ```
 
+-   ### Keys
+
+    `await db.keys(limit?: number);`<br />
+    Returns all keys in the db, you can optionally provide a limit of the number of keys returned<br />
+
+    ```js
+    const keys = await db.keys();
+    const tenKeys = await db.keys(10); // Optional limit
+    ```
+
 -   ## Support
     -   Message me on discord: `GHOST#7524`<br>
     -   Join the [discord](https://discord.gg/2Vd4wAjJnm)<br>

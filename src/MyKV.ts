@@ -87,6 +87,18 @@ class MyKV {
         await this.#query.execute('DELETE FROM :table');
     }
 
+    async keys(limit: number): Promise<String[]> {
+        if (limit && isNaN(limit))
+            throw new TypeError('The limit must be a number');
+
+        const [res] = await this.#query.execute(
+            'SELECT `key` from :table' +
+                (!isNaN(limit) ? ` LIMIT ${limit}` : ''),
+        );
+
+        return res.map(({ key }: { key: string }) => key);
+    }
+
     close(): void {
         if (!this.open) throw new Error('Connection is already closed');
         this.#connection.end();
