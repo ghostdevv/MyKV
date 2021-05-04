@@ -2,7 +2,7 @@
 
 [![](https://img.shields.io/npm/v/mykv?label=Latest%20Version&style=for-the-badge&logo=npm&color=informational)](https://www.npmjs.com/package/mykv)
 [![](https://img.shields.io/static/v1?label=Project%20Creator&message=GHOST&color=informational&style=for-the-badge)](https://ghostdev.xyz)
-[![](https://img.shields.io/github/workflow/status/ghostdevv/mykv/test/main?style=for-the-badge)](https://github.com/ghostdevv/mykv)
+[![](https://img.shields.io/github/workflow/status/ghostdevv/mykv/Tests/main?style=for-the-badge)](https://github.com/ghostdevv/mykv)
 
 MyKV is a key - value wrapper for MySQL. The idea is to have a full feature wrapper that allows for quick use of the MySQL database.
 
