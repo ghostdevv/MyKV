@@ -27,7 +27,7 @@ class MyKV {
         return v == undefined ? false : !v;
     }
 
-    async get(key: string): Promise<any> {
+    async get<T>(key: string): Promise<T | undefined> {
         const [rows] = await this.#connection.execute(
             `SELECT * FROM ${this.#options.table} WHERE \`key\` = ? LIMIT 1`,
             [key],
