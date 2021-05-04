@@ -93,6 +93,16 @@ These are the methods used on your created db
     const tenKeys = await db.keys(10); // Optional limit
     ```
 
+-   ### Values
+
+    `await db.values(limit?: number);`<br />
+    Returns all items in the db (without their keys), you can optionally provide a limit of the number of values returned<br />
+
+    ```js
+    const values = await db.values();
+    const tenValues = await db.values(10); // Optional limit
+    ```
+
 -   ## Support
     -   Message me on discord: `GHOST#7524`<br>
     -   Join the [discord](https://discord.gg/2Vd4wAjJnm)<br>
