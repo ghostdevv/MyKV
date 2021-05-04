@@ -19,7 +19,7 @@
     },
     "dependencies": {
         "configent": "^2.2.0",
-        "json-buffer": "^3.0.0",
+        "json-buffer": "^3.0.1",
         "mysql2": "^2.2.5"
     },
     "license": "MIT",
