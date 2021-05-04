@@ -19,3 +19,8 @@ jobs:
           node-version: ${{ matrix.node-version }}
       - run: npm i
       - run: npm test
+        env:
+          host: "db.ghbox.io"
+          database: "mykv"
+          user: "mykv"
+          password: ${{ secrets.DB_PASSWORD }}
