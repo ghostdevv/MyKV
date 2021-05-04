@@ -75,6 +75,14 @@ These are the methods used on your created db
     const has = await db.has('1234'); // true or false
     ```
 
+-   ### Clear
+
+    `await db.clear();`<br />
+
+    ```js
+    await db.clear();
+    ```
+
 -   ## Support
     -   Message me on discord: `GHOST#7524`<br>
     -   Join the [discord](https://discord.gg/2Vd4wAjJnm)<br>

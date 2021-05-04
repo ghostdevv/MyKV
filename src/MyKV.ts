@@ -83,6 +83,10 @@ class MyKV {
         await this.#query.execute('DELETE FROM :table WHERE `key` = ?', [key]);
     }
 
+    async clear(): Promise<void> {
+        await this.#query.execute('DELETE FROM :table');
+    }
+
     close(): void {
         if (!this.open) throw new Error('Connection is already closed');
         this.#connection.end();
