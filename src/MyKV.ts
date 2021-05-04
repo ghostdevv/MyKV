@@ -30,6 +30,11 @@ class MyKV {
     }
 
     async get<T>(key: string): Promise<T | undefined> {
+        if (typeof key != 'string')
+            throw new TypeError(
+                `Key should be a string, recieved ${typeof key}`,
+            );
+
         const [
             rows,
         ] = await this.#query.execute(
@@ -42,6 +47,11 @@ class MyKV {
     }
 
     async set(key: string, value: any): Promise<void> {
+        if (typeof key != 'string')
+            throw new TypeError(
+                `Key should be a string, recieved ${typeof key}`,
+            );
+
         await this.#query.execute(
             'INSERT IGNORE INTO :table (`key`, `value`) VALUES (?, ?)',
             [key, stringify({ data: value })],
@@ -49,6 +59,11 @@ class MyKV {
     }
 
     async del(key: string): Promise<void> {
+        if (typeof key != 'string')
+            throw new TypeError(
+                `Key should be a string, recieved ${typeof key}`,
+            );
+
         await this.#query.execute('DELETE FROM :table WHERE `key` = ?', [key]);
     }
 
