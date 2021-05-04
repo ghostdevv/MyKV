@@ -49,7 +49,7 @@ class MyKV {
     }
 
     async del(key: string): Promise<void> {
-        await this.#query.execute('DELETE FROM :table WHERE `key` = ?', key);
+        await this.#query.execute('DELETE FROM :table WHERE `key` = ?', [key]);
     }
 
     close(): void {
