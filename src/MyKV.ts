@@ -58,7 +58,7 @@ class MyKV {
     }
 
     async connect(): Promise<void> {
-        if (this.open) throw new Error('Connection is already open');
+        if (this.open) return;
 
         // Connect
         this.#connection = mysql.createPool({
