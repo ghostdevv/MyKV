@@ -2,6 +2,7 @@ export default {
     // Database Settings
     table: 'mykv',
 
+    // Required (given when running new MyKV())
     host: '',
     database: '',
     user: '',
