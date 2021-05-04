@@ -58,6 +58,22 @@ class MyKV {
         );
     }
 
+    async has(key: string): Promise<boolean> {
+        if (typeof key != 'string')
+            throw new TypeError(
+                `Key should be a string, recieved ${typeof key}`,
+            );
+
+        const [
+            rows,
+        ] = await this.#query.execute(
+            'SELECT `key` FROM :table WHERE `key` = ? LIMIT 1',
+            [key],
+        );
+
+        return rows.length > 0;
+    }
+
     async del(key: string): Promise<void> {
         if (typeof key != 'string')
             throw new TypeError(
