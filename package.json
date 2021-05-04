@@ -38,5 +38,19 @@
     },
     "bugs": {
         "url": "https://github.com/ghostdevv/MyKV/issues"
-    }
+    },
+    "keywords": [
+        "mysql",
+        "kvalue",
+        "key value",
+        "key",
+        "value",
+        "mysql kv",
+        "mykv",
+        "MyKV",
+        "mysql key value",
+        "mysql wrapper",
+        "db",
+        "db key value"
+    ]
 }
