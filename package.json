@@ -1,7 +1,6 @@
 {
     "name": "mykv",
     "version": "0.0.0",
-    "private": true,
     "main": "dist/MyKV.js",
     "scripts": {
         "dev": "nodemon dev/index.js",
