@@ -15,5 +15,14 @@
         "dotenv": "^8.2.0",
         "json-buffer": "^3.0.0",
         "mysql2": "^2.2.5"
+    },
+    "license": "MIT",
+    "author": "GHOST",
+    "repository": {
+        "type": "git",
+        "url": "git+https://github.com/ghostdevv/MyKV.git"
+    },
+    "bugs": {
+        "url": "https://github.com/ghostdevv/MyKV/issues"
     }
 }
