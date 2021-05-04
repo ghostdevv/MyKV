@@ -9,7 +9,7 @@ export default class Query {
         this.#table = table;
     }
 
-    async execute(query: string, ...items: any[]): Promise<mysql.Query> {
+    async execute(query: string, items: any[]): Promise<mysql.Query> {
         return this.#connection.execute(
             query.replace(/:table/gi, this.#table),
             items,

@@ -30,9 +30,11 @@ class MyKV {
     }
 
     async get<T>(key: string): Promise<T | undefined> {
-        const [rows] = await this.#query.execute(
+        const [
+            rows,
+        ] = await this.#query.execute(
             'SELECT * FROM :table WHERE `key` = ? LIMIT 1',
-            key,
+            [key],
         );
 
         if (rows.length == 0) return undefined;
