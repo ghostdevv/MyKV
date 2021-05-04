@@ -1,10 +1,10 @@
-import { createConfig, checkRequired } from './helpers/config.js';
-import mysql from 'mysql2/promise';
+import { createConfig, checkRequired } from './helpers/config';
+import * as mysql from 'mysql2/promise';
 import { stringify, parse } from 'json-buffer';
 
-export default class MyKV {
+class MyKV {
     #options;
-    #connection;
+    #connection: any;
 
     constructor(options = {}) {
         this.#options = createConfig(options);
@@ -27,7 +27,7 @@ export default class MyKV {
         return v == undefined ? false : !v;
     }
 
-    async get(key) {
+    async get(key: string) {
         const [rows] = await this.#connection.execute(
             `SELECT * FROM ${this.#options.table} WHERE \`key\` = ? LIMIT 1`,
             [key],
@@ -37,7 +37,7 @@ export default class MyKV {
         return parse(rows[0].value).data;
     }
 
-    async set(key, value) {
+    async set(key: string, value: any) {
         await this.#connection.execute(
             `INSERT IGNORE INTO ${
                 this.#options.table
@@ -46,7 +46,7 @@ export default class MyKV {
         );
     }
 
-    async del(key) {
+    async del(key: string) {
         await this.#connection.execute(
             `DELETE FROM ${this.#options.table} WHERE \`key\` = ?`,
             [key],
@@ -64,7 +64,7 @@ export default class MyKV {
         // Connect
         this.#connection = mysql.createPool({
             host: this.#options.host,
-            port: this.#options.post,
+            port: this.#options.port,
 
             database: this.#options.database,
 
@@ -86,3 +86,6 @@ export default class MyKV {
         return;
     }
 }
+
+export { MyKV };
+export default MyKV;
