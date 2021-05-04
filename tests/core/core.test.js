@@ -97,13 +97,13 @@ test('db.values', async () => {
     await db.set('test', true);
     await db.set('test2', false);
 
-    const keys = await db.values();
-    const limitKeys = await db.values(1);
+    const values = await db.values();
+    const limitValues = await db.values(1);
 
     db.close();
 
-    assert.equal(keys, [true, false]);
-    assert.equal(limitKeys, [true]);
+    assert.equal(values, [true, false]);
+    assert.equal(limitValues, [true]);
 });
 
 test.run();
