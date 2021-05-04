@@ -1,10 +1,12 @@
 import { createConfig, checkRequired } from './helpers/config';
-import * as mysql from 'mysql2/promise';
 import { stringify, parse } from 'json-buffer';
+import * as mysql from 'mysql2/promise';
+import Query from './Query';
 
 class MyKV {
     #options;
     #connection: any;
+    #query: any;
 
     constructor(options = {}) {
         this.#options = createConfig(options);
@@ -28,9 +30,9 @@ class MyKV {
     }
 
     async get<T>(key: string): Promise<T | undefined> {
-        const [rows] = await this.#connection.execute(
-            `SELECT * FROM ${this.#options.table} WHERE \`key\` = ? LIMIT 1`,
-            [key],
+        const [rows] = await this.#query.execute(
+            'SELECT * FROM :table WHERE `key` = ? LIMIT 1',
+            key,
         );
 
         if (rows.length == 0) return undefined;
@@ -38,19 +40,14 @@ class MyKV {
     }
 
     async set(key: string, value: any): Promise<void> {
-        await this.#connection.execute(
-            `INSERT IGNORE INTO ${
-                this.#options.table
-            } (\`key\`, \`value\`) VALUES (?, ?);`,
+        await this.#query.execute(
+            'INSERT IGNORE INTO :table (`key`, `value`) VALUES (?, ?)',
             [key, stringify({ data: value })],
         );
     }
 
     async del(key: string): Promise<void> {
-        await this.#connection.execute(
-            `DELETE FROM ${this.#options.table} WHERE \`key\` = ?`,
-            [key],
-        );
+        await this.#query.execute('DELETE FROM :table WHERE `key` = ?', key);
     }
 
     close(): void {
@@ -76,11 +73,11 @@ class MyKV {
             queueLimit: this.#options.queueLimit,
         });
 
+        this.#query = new Query(this.#connection, this.#options.table);
+
         // Create the table
-        await this.#connection.execute(
-            `CREATE TABLE IF NOT EXISTS ${
-                this.#options.table
-            } (\`key\` VARCHAR(64) PRIMARY KEY NOT NULL, \`value\` TEXT DEFAULT "{ \\"data\\": null }")`,
+        await this.#query.execute(
+            'CREATE TABLE IF NOT EXISTS :table (`key` VARCHAR(64) PRIMARY KEY NOT NULL, `value` TEXT DEFAULT "{ \\"data\\": null }")',
         );
 
         return;
