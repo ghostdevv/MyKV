@@ -113,7 +113,7 @@ These are the methods used on your created db
     const tenEntries = await db.entries(10); // Optional limit
     ```
 
--   ## Support
-    -   Message me on discord: `GHOST#7524`<br>
-    -   Join the [discord](https://discord.gg/2Vd4wAjJnm)<br>
-    -   Create a issue on the [github](https://github.com/ghostdevv/mykv)
+# Support
+-   Message me on discord: `GHOST#7524`<br>
+-   Join the [discord](https://discord.gg/2Vd4wAjJnm)<br>
+-   Create a issue on the [github](https://github.com/ghostdevv/mykv)
