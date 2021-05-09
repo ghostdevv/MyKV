@@ -52,9 +52,11 @@ class MyKV {
                 `Key should be a string, recieved ${typeof key}`,
             );
 
+        value = stringify({ data: value });
+
         await this.#query.execute(
-            'INSERT IGNORE INTO :table (`key`, `value`) VALUES (?, ?)',
-            [key, stringify({ data: value })],
+            'INSERT INTO :table (`key`, `value`) VALUES (?, ?) ON DUPLICATE KEY UPDATE `value` = ?;',
+            [key, value, value],
         );
     }
 
