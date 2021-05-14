@@ -16,7 +16,7 @@ jobs:
       - run: npm i
       - run: npm test
         env:
-          host: "db.ghbox.io"
+          host: "db.oxova.host"
           database: "mykv"
           user: "mykv"
           password: ${{ secrets.DB_PASSWORD }}
