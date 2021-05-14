@@ -6,7 +6,7 @@ import Query from './Query';
 class MyKV {
     private options;
     private connection: any;
-    private query: any;
+    private query: InstanceType<any>;
 
     constructor(options = {}) {
         this.options = createConfig(options);
