@@ -4,14 +4,14 @@ import * as mysql from 'mysql2/promise';
 import Query from './Query';
 
 class MyKV {
-    #options;
-    #connection: any;
-    #query: any;
+    private options;
+    private connection: any;
+    private query: any;
 
     constructor(options = {}) {
-        this.#options = createConfig(options);
+        this.options = createConfig(options);
 
-        const hasRequired = checkRequired(this.#options, [
+        const hasRequired = checkRequired(this.options, [
             'database',
             'host',
             'user',
@@ -25,7 +25,7 @@ class MyKV {
     }
 
     get open(): boolean {
-        const v = this.#connection?.pool?._closed;
+        const v = this.connection?.pool?._closed;
         return v == undefined ? false : !v;
     }
 
@@ -35,7 +35,7 @@ class MyKV {
                 `Key should be a string, recieved ${typeof key}`,
             );
 
-        const [rows] = await this.#query.execute(
+        const [rows] = await this.query.execute(
             'SELECT * FROM :table WHERE `key` = ? LIMIT 1',
             [key],
         );
@@ -52,7 +52,7 @@ class MyKV {
 
         value = stringify({ data: value });
 
-        await this.#query.execute(
+        await this.query.execute(
             'REPLACE INTO :table (`key`, `value`) VALUES (?, ?);',
             [key, value],
         );
@@ -64,7 +64,7 @@ class MyKV {
                 `Key should be a string, recieved ${typeof key}`,
             );
 
-        const [rows] = await this.#query.execute(
+        const [rows] = await this.query.execute(
             'SELECT `key` FROM :table WHERE `key` = ? LIMIT 1',
             [key],
         );
@@ -78,18 +78,18 @@ class MyKV {
                 `Key should be a string, recieved ${typeof key}`,
             );
 
-        await this.#query.execute('DELETE FROM :table WHERE `key` = ?', [key]);
+        await this.query.execute('DELETE FROM :table WHERE `key` = ?', [key]);
     }
 
     async clear(): Promise<void> {
-        await this.#query.execute('DELETE FROM :table');
+        await this.query.execute('DELETE FROM :table');
     }
 
     async keys(limit: number): Promise<String[]> {
         if (limit && isNaN(limit))
             throw new TypeError('The limit must be a number');
 
-        const [res] = await this.#query.execute(
+        const [res] = await this.query.execute(
             'SELECT `key` from :table' +
                 (!isNaN(limit) ? ` LIMIT ${limit}` : ''),
         );
@@ -101,7 +101,7 @@ class MyKV {
         if (limit && isNaN(limit))
             throw new TypeError('The limit must be a number');
 
-        const [res] = await this.#query.execute(
+        const [res] = await this.query.execute(
             'SELECT `value` from :table' +
                 (!isNaN(limit) ? ` LIMIT ${limit}` : ''),
         );
@@ -113,7 +113,7 @@ class MyKV {
         if (limit && isNaN(limit))
             throw new TypeError('The limit must be a number');
 
-        const [res] = await this.#query.execute(
+        const [res] = await this.query.execute(
             'SELECT * from :table' + (!isNaN(limit) ? ` LIMIT ${limit}` : ''),
         );
 
@@ -125,31 +125,31 @@ class MyKV {
 
     close(): void {
         if (!this.open) throw new Error('Connection is already closed');
-        this.#connection.end();
+        this.connection.end();
     }
 
     async connect(): Promise<void> {
         if (this.open) return;
 
         // Connect
-        this.#connection = mysql.createPool({
-            host: this.#options.host,
-            port: this.#options.port,
+        this.connection = mysql.createPool({
+            host: this.options.host,
+            port: this.options.port,
 
-            database: this.#options.database,
+            database: this.options.database,
 
-            user: this.#options.user,
-            password: this.#options.password,
+            user: this.options.user,
+            password: this.options.password,
 
-            waitForConnections: this.#options.waitForConnections,
-            connectionLimit: this.#options.connectionLimit,
-            queueLimit: this.#options.queueLimit,
+            waitForConnections: this.options.waitForConnections,
+            connectionLimit: this.options.connectionLimit,
+            queueLimit: this.options.queueLimit,
         });
 
-        this.#query = new Query(this.#connection, this.#options.table);
+        this.query = new Query(this.connection, this.options.table);
 
         // Create the table
-        await this.#query.execute(
+        await this.query.execute(
             'CREATE TABLE IF NOT EXISTS :table (`key` VARCHAR(64) PRIMARY KEY NOT NULL, `value` TEXT DEFAULT "{ \\"data\\": null }")',
         );
 
