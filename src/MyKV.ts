@@ -35,9 +35,7 @@ class MyKV {
                 `Key should be a string, recieved ${typeof key}`,
             );
 
-        const [
-            rows,
-        ] = await this.#query.execute(
+        const [rows] = await this.#query.execute(
             'SELECT * FROM :table WHERE `key` = ? LIMIT 1',
             [key],
         );
@@ -66,9 +64,7 @@ class MyKV {
                 `Key should be a string, recieved ${typeof key}`,
             );
 
-        const [
-            rows,
-        ] = await this.#query.execute(
+        const [rows] = await this.#query.execute(
             'SELECT `key` FROM :table WHERE `key` = ? LIMIT 1',
             [key],
         );
