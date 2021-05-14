@@ -53,8 +53,8 @@ class MyKV {
         value = stringify({ data: value });
 
         await this.#query.execute(
-            'INSERT INTO :table (`key`, `value`) VALUES (?, ?) ON DUPLICATE KEY UPDATE `value` = ?;',
-            [key, value, value],
+            'REPLACE INTO :table (`key`, `value`) VALUES (?, ?);',
+            [key, value],
         );
     }
 
