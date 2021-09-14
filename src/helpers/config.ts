@@ -1,11 +1,17 @@
 import { configent } from 'configent';
 import defaults from '../config.defaults';
 
+/**
+ * Use configent to merge a config with defaults
+ */
 export const createConfig = (inp: Object) =>
     configent(defaults, inp, {
         name: 'mykv',
     });
 
+/**
+ * Check config has requried options
+ */
 export const checkRequired = (options: Object, required: String[] = []) => {
     for (const item of required) {
         // @ts-ignore

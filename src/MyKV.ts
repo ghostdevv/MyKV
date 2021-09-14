@@ -3,7 +3,10 @@ import { stringify, parse } from 'json-buffer';
 import * as mysql from 'mysql2/promise';
 import Query from './Query';
 
-class MyKV {
+/**
+ * The main MyKV Class
+ */
+export class MyKV {
     private options;
     private connection: any;
     private query: InstanceType<any>;
@@ -24,11 +27,17 @@ class MyKV {
             );
     }
 
+    /**
+     * Whether the connection to the db is open or closed
+     */
     get open(): boolean {
         const v = this.connection?.pool?._closed;
         return v == undefined ? false : !v;
     }
 
+    /**
+     * Get a key from the db
+     */
     async get<T>(key: string): Promise<T | undefined> {
         if (typeof key != 'string')
             throw new TypeError(
@@ -44,6 +53,9 @@ class MyKV {
         return parse(rows[0].value).data;
     }
 
+    /**
+     * Set a key's value
+     */
     async set(key: string, value: any): Promise<void> {
         if (typeof key != 'string')
             throw new TypeError(
@@ -58,6 +70,9 @@ class MyKV {
         );
     }
 
+    /**
+     * Check if a key exists in the db
+     */
     async has(key: string): Promise<boolean> {
         if (typeof key != 'string')
             throw new TypeError(
@@ -72,6 +87,9 @@ class MyKV {
         return rows.length > 0;
     }
 
+    /**
+     * Delete a key in the db
+     */
     async del(key: string): Promise<void> {
         if (typeof key != 'string')
             throw new TypeError(
@@ -81,10 +99,16 @@ class MyKV {
         await this.query.execute('DELETE FROM :table WHERE `key` = ?', [key]);
     }
 
+    /**
+     * Empty the db 
+     */
     async clear(): Promise<void> {
         await this.query.execute('DELETE FROM :table');
     }
 
+    /**
+     * Get the keys in the db
+     */
     async keys(limit: number): Promise<String[]> {
         if (limit && isNaN(limit))
             throw new TypeError('The limit must be a number');
@@ -97,6 +121,9 @@ class MyKV {
         return res.map(({ key }: { key: string }) => key);
     }
 
+    /**
+     * Get the values in the db
+     */
     async values(limit: number): Promise<any[]> {
         if (limit && isNaN(limit))
             throw new TypeError('The limit must be a number');
@@ -109,6 +136,9 @@ class MyKV {
         return res.map(({ value }: { value: any }) => parse(value).data);
     }
 
+    /**
+     * Get a [key, value] array for each key in the db
+     */
     async entries(limit: number): Promise<IterableIterator<[any, any]>> {
         if (limit && isNaN(limit))
             throw new TypeError('The limit must be a number');
@@ -123,11 +153,17 @@ class MyKV {
         ]);
     }
 
+    /**
+     * Close the connection to the db
+     */
     close(): void {
         if (!this.open) throw new Error('Connection is already closed');
         this.connection.end();
     }
 
+    /**
+     * Connect to the db
+     */
     async connect(): Promise<void> {
         if (this.open) return;
 
@@ -157,5 +193,4 @@ class MyKV {
     }
 }
 
-export { MyKV };
 export default MyKV;
