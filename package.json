@@ -38,6 +38,11 @@
         "json-buffer": "^3.0.0",
         "knex": "^0.95.11"
     },
+    "optionalDependencies": {
+        "mysql": "^2.18.1",
+        "pg": "^8.7.1",
+        "sqlite3": "^5.0.2"
+    },
     "license": "MIT",
     "author": "GHOST",
     "repository": {
