@@ -1,17 +1,12 @@
-import { defaults, MyKVOptions } from './options/options';
-import { createConfig } from './options/helpers';
+import { defaults, MyKVOptions } from '../options/options';
+import { createConfig } from '../options/helpers';
 import knex from 'knex';
 
-export interface MyKVRecord {
-    key: string;
-    value: string | undefined | null;
-}
+export class BaseMyKV {
+    protected readonly options;
+    protected readonly db;
 
-export class MyKV {
-    private readonly options;
-    private readonly db;
-
-    private connected = false;
+    protected connected = false;
 
     constructor(options?: MyKVOptions) {
         this.options = createConfig(options || defaults);
@@ -51,5 +46,3 @@ export class MyKV {
         this.connected = true;
     }
 }
-
-export default MyKV;

@@ -1,2 +1,2 @@
-export { MyKV } from './MyKV';
-export { MyKVOptions } from './options/options'
+export { MyKV } from './MyKV/MyKV';
+export { MyKVOptions } from './options/options';
