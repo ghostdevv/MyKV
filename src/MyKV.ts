@@ -38,7 +38,7 @@ export class MyKV {
      */
     async connect(): Promise<void> {
         if (!(await this.db.schema.hasTable(this.options.table)))
-            this.db.schema.createTable(this.options.table, (table) => {
+            await this.db.schema.createTable(this.options.table, (table) => {
                 table.string('key', 64);
                 table.text('value');
                 table.primary(['key']);
