@@ -47,6 +47,15 @@ export class MyKV extends BaseMyKV {
 
         return !!h;
     }
+
+    async del(key: string): Promise<void> {
+        if (typeof key != 'string')
+            throw new TypeError(
+                `Key should be a string, recieved ${typeof key}`,
+            );
+
+        await this.store.del().where({ key });
+    }
 }
 
 export default MyKV;
