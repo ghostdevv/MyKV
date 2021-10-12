@@ -1,6 +1,6 @@
 import { MyKVOptions } from '../options/options';
+import { parse, stringify } from 'json-buffer';
 import { BaseMyKV } from './BaseMyKV';
-import { parse } from 'json-buffer';
 
 export class MyKV extends BaseMyKV {
     constructor(options?: MyKVOptions) {
@@ -23,6 +23,18 @@ export class MyKV extends BaseMyKV {
         const value = await this.store.select('value').where({ key }).first();
 
         return value ? parse(value.value) : undefined;
+    }
+
+    async set(key: string, value: any): Promise<void> {
+        if (typeof key != 'string')
+            throw new TypeError(
+                `Key should be a string, recieved ${typeof key}`,
+            );
+
+        await this.store
+            .insert({ key, value: stringify(value) })
+            .onConflict('key')
+            .merge();
     }
 }
 
