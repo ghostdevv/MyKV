@@ -56,6 +56,42 @@ export class MyKV extends BaseMyKV {
 
         await this.store.del().where({ key });
     }
+
+    async keys(limit?: number): Promise<string[]> {
+        if (limit && isNaN(limit))
+            throw new TypeError('The limit must be a number');
+
+        const q = this.store;
+        if (limit) q.limit(limit);
+
+        const k = await q.select('key');
+
+        return k ? k.map((x) => x.key) : [];
+    }
+
+    async values(limit?: number): Promise<any[]> {
+        if (limit && isNaN(limit))
+            throw new TypeError('The limit must be a number');
+
+        const q = this.store;
+        if (limit) q.limit(limit);
+
+        const v = await q.select('value');
+
+        return v ? v.map((x) => x.value) : [];
+    }
+
+    async entries(limit?: number): Promise<[string, any][]> {
+        if (limit && isNaN(limit))
+            throw new TypeError('The limit must be a number');
+
+        const q = this.store;
+        if (limit) q.limit(limit);
+
+        const kv = await q.select();
+
+        return kv ? kv.map((x) => [x.key, x.value]) : [];
+    }
 }
 
 export default MyKV;
