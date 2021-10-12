@@ -57,7 +57,7 @@ test('database open getter works', async () => {
 
     assert.is(db.connected, true);
 
-    db.close();
+    await db.close();
 
     assert.is(db.connected, false);
 });
