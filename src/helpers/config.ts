@@ -1,5 +1,5 @@
-import { configent } from 'configent';
 import defaults from '../config.defaults';
+import { configent } from 'configent';
 
 /**
  * Use configent to merge a config with defaults
