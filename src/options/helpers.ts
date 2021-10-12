@@ -1,10 +1,10 @@
+import { defaults, MyKVOptions } from './options';
 import { configent } from 'configent';
-import { defaults } from './options';
 
 /**
  * Use configent to merge a config with defaults
  */
-export const createConfig = (inp: Object) =>
+export const createConfig = (inp: Object): MyKVOptions =>
     configent(defaults, inp, {
         name: 'mykv',
     });
