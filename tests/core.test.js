@@ -1,17 +1,17 @@
 const { join } = require('path');
 require('dotenv').config({ path: join(__dirname, './.env') });
-const { MyKV } = require('../../dist/MyKV.js');
+const { MyKV } = require('../dist');
 
 const { test } = require('uvu');
 const assert = require('uvu/assert');
 
-const { host, user, database, password } = process.env;
-
 const db = new MyKV({
-    host,
-    user,
-    database,
-    password,
+    connection: {
+        host: process.env.DB_HOST,
+        user: process.env.DB_USERNAME,
+        database: process.env.DB_DATABASE,
+        password: process.env.DB_PASSWORD,
+    },
 });
 
 test('setting and getting a value', async () => {
