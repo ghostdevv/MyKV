@@ -24,8 +24,8 @@ export class BaseMyKV {
      * Closes the connection to the database
      */
     async close(): Promise<void> {
-        await this.db.destroy();
         this._connected = false;
+        await this.db.destroy();
     }
 
     /**
