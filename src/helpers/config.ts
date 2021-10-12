@@ -12,9 +12,8 @@ export const createConfig = (inp: Object) =>
 /**
  * Check config has requried options
  */
-export const checkRequired = (options: Object, required: String[] = []) => {
+export const checkRequired = (options: Record<string, any>, required: string[] = []) => {
     for (const item of required) {
-        // @ts-ignore
         if (!options[item] || options[item] == '') return false;
     }
 
