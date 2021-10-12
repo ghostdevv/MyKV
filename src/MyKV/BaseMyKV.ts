@@ -4,7 +4,7 @@ import knex from 'knex';
 
 export interface MyKVRecord {
     key: string;
-    value: string | undefined | null;
+    value: string;
 }
 
 export class BaseMyKV {
