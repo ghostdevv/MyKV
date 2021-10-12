@@ -4,15 +4,15 @@
     "main": "dist/index.js",
     "module": "dist/index.mjs",
     "exports": {
-      ".": {
-        "require": "./dist/index.js",
-        "import": "./dist/index.mjs"
-      }
+        ".": {
+            "require": "./dist/index.js",
+            "import": "./dist/index.mjs"
+        }
     },
     "scripts": {
         "dev": "run-p dev:*",
         "dev:ts": "tsup-node --watch src",
-        "dev:nodemon": "nodemon dev/src/index.js",
+        "dev:nodemon": "cd dev && nodemon src/index.js",
         "test": "run-s test:*",
         "test:build": "npm run build",
         "test:test": "uvu tests",
