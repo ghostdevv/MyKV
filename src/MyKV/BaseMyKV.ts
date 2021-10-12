@@ -2,6 +2,11 @@ import { defaults, MyKVOptions } from '../options/options';
 import { createConfig } from '../options/helpers';
 import knex from 'knex';
 
+export interface MyKVRecord {
+    key: string;
+    value: string | undefined | null;
+}
+
 export class BaseMyKV {
     protected readonly options;
     protected readonly db;
@@ -11,6 +16,10 @@ export class BaseMyKV {
     constructor(options?: MyKVOptions) {
         this.options = createConfig(options || defaults);
         this.db = knex(this.options);
+    }
+
+    protected get store() {
+        return this.db.from<MyKVRecord>(this.options.table);
     }
 
     /**
