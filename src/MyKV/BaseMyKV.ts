@@ -6,7 +6,7 @@ export class BaseMyKV {
     protected readonly options;
     protected readonly db;
 
-    protected connected = false;
+    private _connected = false;
 
     constructor(options?: MyKVOptions) {
         this.options = createConfig(options || defaults);
@@ -14,11 +14,18 @@ export class BaseMyKV {
     }
 
     /**
+     * Check whether the database is connected
+     */
+    public get connected() {
+        return this._connected;
+    }
+
+    /**
      * Closes the connection to the database
      */
     async close(): Promise<void> {
         await this.db.destroy();
-        this.connected = false;
+        this._connected = false;
     }
 
     /**
@@ -43,6 +50,6 @@ export class BaseMyKV {
         // Test the connection
         await this.db.raw('select 1+1 as result');
 
-        this.connected = true;
+        this._connected = true;
     }
 }
