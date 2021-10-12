@@ -55,11 +55,11 @@ test('db.has', async () => {
 test('database open getter works', async () => {
     await db.connect();
 
-    assert.is(db.open, true);
+    assert.is(db.connected, true);
 
     db.close();
 
-    assert.is(db.open, false);
+    assert.is(db.connected, false);
 });
 
 test('db.clear', async () => {
