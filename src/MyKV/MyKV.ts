@@ -36,6 +36,17 @@ export class MyKV extends BaseMyKV {
             .onConflict('key')
             .merge();
     }
+
+    async has(key: string): Promise<boolean> {
+        if (typeof key != 'string')
+            throw new TypeError(
+                `Key should be a string, recieved ${typeof key}`,
+            );
+
+        const h = await this.store.select('key').where({ key }).first();
+
+        return !!h;
+    }
 }
 
 export default MyKV;
