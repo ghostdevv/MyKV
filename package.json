@@ -12,7 +12,7 @@
     "scripts": {
         "dev": "run-p dev:*",
         "dev:ts": "tsup-node --watch src",
-        "dev:nodemon": "nodemon dev/index.js",
+        "dev:nodemon": "nodemon dev/src/index.js",
         "test": "run-s test:*",
         "test:build": "npm run build",
         "test:test": "uvu tests",

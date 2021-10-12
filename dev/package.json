@@ -1,0 +1,9 @@
+{
+    "type": "module",
+    "workspaces": [
+        ".."
+    ],
+    "devDependencies": {
+        "dotenv": "^10.0.0"
+    }
+}
