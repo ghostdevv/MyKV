@@ -10,4 +10,15 @@ const db = new MyKV({
     },
 });
 
-db.connect().then(() => console.log('Connected'));
+db.connect().then(async () => {
+    console.log('Connected');
+
+    for (let i = 0; i < 3; i++) {
+        await db.set(i.toString(), i);
+        console.log(await db.get(i.toString()));
+    }
+
+    console.log(await db.has('a'));
+
+    console.log(await db.values(2));
+});

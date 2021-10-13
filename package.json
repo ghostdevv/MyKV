@@ -15,7 +15,7 @@
         "dev:nodemon": "cd dev && nodemon src/index.js",
         "test": "run-s test:*",
         "test:build": "npm run build",
-        "test:test": "uvu tests",
+        "test:test": "uvu tests/unit",
         "build": "tsup-node"
     },
     "files": [
