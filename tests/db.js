@@ -3,9 +3,8 @@ const { join } = require('path');
 config({ path: join(__dirname, './.env') });
 
 const { MyKV } = require('../dist');
-const { suite } = require('uvu');
 
-const db = new MyKV({
+module.exports.db = new MyKV({
     connection: {
         host: process.env.DB_HOST,
         user: process.env.DB_USERNAME,
@@ -13,12 +12,3 @@ const db = new MyKV({
         password: process.env.DB_PASSWORD,
     },
 });
-
-const test = suite();
-
-test.before(async () => await db.connect());
-test.after(async () => await db.close());
-
-test.run();
-
-module.exports = { db, test };
