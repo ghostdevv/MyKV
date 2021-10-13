@@ -78,7 +78,7 @@ export class MyKV extends BaseMyKV {
 
         const v = await q.select('value');
 
-        return v ? v.map((x) => x.value) : [];
+        return v ? v.map((x) => parse(x.value)) : [];
     }
 
     async entries(limit?: number): Promise<[string, any][]> {
@@ -90,7 +90,7 @@ export class MyKV extends BaseMyKV {
 
         const kv = await q.select();
 
-        return kv ? kv.map((x) => [x.key, x.value]) : [];
+        return kv ? kv.map((x) => [x.key, parse(x.value)]) : [];
     }
 }
 
