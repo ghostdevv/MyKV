@@ -4,9 +4,11 @@
 [![](https://img.shields.io/static/v1?label=Project%20Creator&message=GHOST&color=informational&style=for-the-badge)](https://ghostdev.xyz)
 [![](https://img.shields.io/github/workflow/status/ghostdevv/mykv/Tests/main?style=for-the-badge)](https://github.com/ghostdevv/mykv)
 
-MyKV is a key value wrapper for MySQL. The idea is to have a full feature wrapper that allows for quick use of the MySQL database.
+MyKV started out as a wrapper for only MySQL but with the power of knex we support most sql variations.
 
-# How to use
+# How to use/connect
+
+See [knexjs connecting](https://knexjs.org/#Installation-client)
 
 ```js
 const { MyKV } = require('mykv');
@@ -14,19 +16,18 @@ const { MyKV } = require('mykv');
 import { MyKV } from 'mykv';
 
 const db = new MyKV({
-    // Required options:
-    host: '',
-    database: '',
-    username: '',
-    password: '',
+    connection: {
+        host: '',
+        database: '',
+        username: '',
+        password: '',
+    }
 });
 
 db.connect()
     .then(() => console.log('Connected'))
     .catch((e) => console.error(`Unable to connect: ${e.message}`));
 ```
-
-Default options can be found [here](https://github.com/ghostdevv/MyKV/blob/main/src/config.defaults.ts)
 
 # Methods
 
@@ -114,6 +115,5 @@ These are the methods used on your created db
     ```
 
 # Support
--   Message me on discord: `GHOST#7524`<br>
 -   Join the [discord](https://discord.gg/2Vd4wAjJnm)<br>
 -   Create a issue on the [github](https://github.com/ghostdevv/mykv)
