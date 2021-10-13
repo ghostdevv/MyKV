@@ -1,9 +1,9 @@
 const { config } = require('dotenv');
 const { join } = require('path');
-config({ path: join(__dirname, '../.env') });
+config({ path: join(__dirname, './.env') });
 
 const assert = require('uvu/assert');
-const { MyKV } = require('../../dist');
+const { MyKV } = require('../dist');
 const { suite } = require('uvu');
 
 const db = new MyKV({
