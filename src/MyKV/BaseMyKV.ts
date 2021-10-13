@@ -9,17 +9,20 @@ export interface MyKVRecord {
 
 export class BaseMyKV {
     protected readonly options;
-    protected readonly db;
+    protected readonly driver;
 
     private _connected = false;
 
     constructor(options?: MyKVOptions) {
         this.options = createConfig(options || defaults);
-        this.db = knex(this.options);
+        this.driver = knex(this.options);
     }
 
-    protected get store() {
-        return this.db.from<MyKVRecord>(this.options.table);
+    /**
+     * Get the knex store for this instance of mykv
+     */
+    public get store() {
+        return this.driver.from<MyKVRecord>(this.options.table);
     }
 
     /**
@@ -34,30 +37,33 @@ export class BaseMyKV {
      */
     async close(): Promise<void> {
         this._connected = false;
-        await this.db.destroy();
+        await this.driver.destroy();
     }
 
     /**
      * Get the raw knex connection
      */
     public get raw() {
-        return this.db;
+        return this.driver;
     }
 
     /**
      * Connect to the db
      */
     async connect(): Promise<void> {
-        if (!(await this.db.schema.hasTable(this.options.table)))
-            await this.db.schema.createTable(this.options.table, (table) => {
-                table.string('key', 64);
-                table.text('value');
-                table.primary(['key']);
-                table.unique(['key']);
-            });
+        if (!(await this.driver.schema.hasTable(this.options.table)))
+            await this.driver.schema.createTable(
+                this.options.table,
+                (table) => {
+                    table.string('key', 64);
+                    table.text('value');
+                    table.primary(['key']);
+                    table.unique(['key']);
+                },
+            );
 
         // Test the connection
-        await this.db.raw('select 1+1 as result');
+        await this.driver.raw('select 1+1 as result');
 
         this._connected = true;
     }
