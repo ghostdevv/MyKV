@@ -1,10 +1,7 @@
+const { db, test } = require('../db');
 const assert = require('uvu/assert');
-const { db } = require('../db');
-const { test } = require('uvu');
 
 test('db.has', async () => {
-    await db.connect();
-
     await db.set('test', 'yes');
     const res1 = await db.has('test');
 
@@ -13,8 +10,4 @@ test('db.has', async () => {
 
     assert.is(res1, true);
     assert.is(res2, false);
-
-    db.close();
 });
-
-test.run();
