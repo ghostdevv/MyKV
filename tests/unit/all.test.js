@@ -1,20 +1,33 @@
+const { config } = require('dotenv');
+const { join } = require('path');
+config({ path: join(__dirname, '../.env') });
+
 const assert = require('uvu/assert');
+const { MyKV } = require('../../dist');
 const { suite } = require('uvu');
-const { db } = require('../db');
 
-const test = suite();
+const db = new MyKV({
+    connection: {
+        host: process.env.DB_HOST,
+        user: process.env.DB_USERNAME,
+        database: process.env.DB_DATABASE,
+        password: process.env.DB_PASSWORD,
+    },
+});
 
-test.before(async () => await db.connect());
-test.after(async () => await db.close());
+const all = suite();
 
-test('setting and getting a value', async () => {
+all.before(async () => await db.connect());
+all.after(async () => await db.close());
+
+all('setting and getting a value', async () => {
     await db.set('test', true);
     const v = await db.get('test');
 
     if (v !== true) throw new Error('Failed');
 });
 
-test('db.del', async () => {
+all('db.del', async () => {
     await db.set('test', true);
     await db.del('test');
 
@@ -22,7 +35,7 @@ test('db.del', async () => {
     if (v !== undefined) throw new Error('Failed');
 });
 
-test('db.has', async () => {
+all('db.has', async () => {
     await db.set('test', 'yes');
     const res1 = await db.has('test');
 
@@ -33,7 +46,7 @@ test('db.has', async () => {
     assert.is(res2, false);
 });
 
-// test('database open getter works', async () => {
+// all('database open getter works', async () => {
 //     await db.connect();
 
 //     assert.is(db.open, true);
@@ -43,7 +56,7 @@ test('db.has', async () => {
 //     assert.is(db.open, false);
 // });
 
-test('db.clear', async () => {
+all('db.clear', async () => {
     await db.set('test', true);
     await db.clear();
 
@@ -51,7 +64,7 @@ test('db.clear', async () => {
     if (v) throw new Error("Failed, didn't clear");
 });
 
-test('db.keys', async () => {
+all('db.keys', async () => {
     await db.clear();
     await db.set('test', true);
     await db.set('test2', true);
@@ -63,7 +76,7 @@ test('db.keys', async () => {
     assert.equal(limitKeys, ['test']);
 });
 
-test('db.values', async () => {
+all('db.values', async () => {
     await db.clear();
     await db.set('test', true);
     await db.set('test2', false);
@@ -75,7 +88,7 @@ test('db.values', async () => {
     assert.equal(limitValues, [true]);
 });
 
-test('db.entries', async () => {
+all('db.entries', async () => {
     await db.clear();
     await db.set('test', true);
     await db.set('test2', false);
@@ -91,4 +104,4 @@ test('db.entries', async () => {
     assert.equal(limitEntries, [['test', true]]);
 });
 
-test.run();
+all.run();
