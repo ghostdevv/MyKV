@@ -10,14 +10,24 @@ export class MyKV extends BaseMyKV {
     /**
      * Empty the database
      */
-    clear() {
-        return this.store.del();
+    async clear(): Promise<void> {
+        if (!this.connected)
+            throw new Error(
+                'You must be connected to the db to do this, try await db.connect',
+            );
+
+        await this.store.del();
     }
 
     /**
      * Get a key's value from the db
      */
     async get<T extends string>(key: string): Promise<T | undefined> {
+        if (!this.connected)
+            throw new Error(
+                'You must be connected to the db to do this, try await db.connect',
+            );
+
         if (typeof key != 'string')
             throw new TypeError(
                 `Key should be a string, recieved ${typeof key}`,
@@ -32,6 +42,11 @@ export class MyKV extends BaseMyKV {
      * Set the value of a key
      */
     async set(key: string, value: any): Promise<void> {
+        if (!this.connected)
+            throw new Error(
+                'You must be connected to the db to do this, try await db.connect',
+            );
+
         if (typeof key != 'string')
             throw new TypeError(
                 `Key should be a string, recieved ${typeof key}`,
@@ -47,6 +62,11 @@ export class MyKV extends BaseMyKV {
      * Check if a key exists
      */
     async has(key: string): Promise<boolean> {
+        if (!this.connected)
+            throw new Error(
+                'You must be connected to the db to do this, try await db.connect',
+            );
+
         if (typeof key != 'string')
             throw new TypeError(
                 `Key should be a string, recieved ${typeof key}`,
@@ -61,6 +81,11 @@ export class MyKV extends BaseMyKV {
      * Delete a key
      */
     async del(key: string): Promise<void> {
+        if (!this.connected)
+            throw new Error(
+                'You must be connected to the db to do this, try await db.connect',
+            );
+
         if (typeof key != 'string')
             throw new TypeError(
                 `Key should be a string, recieved ${typeof key}`,
@@ -73,6 +98,11 @@ export class MyKV extends BaseMyKV {
      * Get all keys
      */
     async keys(limit?: number): Promise<string[]> {
+        if (!this.connected)
+            throw new Error(
+                'You must be connected to the db to do this, try await db.connect',
+            );
+
         if (limit && isNaN(limit))
             throw new TypeError('The limit must be a number');
 
@@ -88,6 +118,11 @@ export class MyKV extends BaseMyKV {
      * Get all values
      */
     async values(limit?: number): Promise<any[]> {
+        if (!this.connected)
+            throw new Error(
+                'You must be connected to the db to do this, try await db.connect',
+            );
+
         if (limit && isNaN(limit))
             throw new TypeError('The limit must be a number');
 
@@ -103,6 +138,11 @@ export class MyKV extends BaseMyKV {
      * Get all keys and values in tuple form
      */
     async entries(limit?: number): Promise<[string, any][]> {
+        if (!this.connected)
+            throw new Error(
+                'You must be connected to the db to do this, try await db.connect',
+            );
+
         if (limit && isNaN(limit))
             throw new TypeError('The limit must be a number');
 
