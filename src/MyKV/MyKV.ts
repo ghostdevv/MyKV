@@ -14,6 +14,9 @@ export class MyKV extends BaseMyKV {
         return this.store.del();
     }
 
+    /**
+     * Get a key's value from the db
+     */
     async get<T extends string>(key: string): Promise<T | undefined> {
         if (typeof key != 'string')
             throw new TypeError(
@@ -25,6 +28,9 @@ export class MyKV extends BaseMyKV {
         return value ? parse(value.value) : undefined;
     }
 
+    /**
+     * Set the value of a key
+     */
     async set(key: string, value: any): Promise<void> {
         if (typeof key != 'string')
             throw new TypeError(
@@ -37,6 +43,9 @@ export class MyKV extends BaseMyKV {
             .merge();
     }
 
+    /**
+     * Check if a key exists
+     */
     async has(key: string): Promise<boolean> {
         if (typeof key != 'string')
             throw new TypeError(
@@ -48,6 +57,9 @@ export class MyKV extends BaseMyKV {
         return !!h;
     }
 
+    /**
+     * Delete a key
+     */
     async del(key: string): Promise<void> {
         if (typeof key != 'string')
             throw new TypeError(
@@ -57,6 +69,9 @@ export class MyKV extends BaseMyKV {
         await this.store.del().where({ key });
     }
 
+    /**
+     * Get all keys
+     */
     async keys(limit?: number): Promise<string[]> {
         if (limit && isNaN(limit))
             throw new TypeError('The limit must be a number');
@@ -69,6 +84,9 @@ export class MyKV extends BaseMyKV {
         return k ? k.map((x) => x.key) : [];
     }
 
+    /**
+     * Get all values
+     */
     async values(limit?: number): Promise<any[]> {
         if (limit && isNaN(limit))
             throw new TypeError('The limit must be a number');
@@ -81,6 +99,9 @@ export class MyKV extends BaseMyKV {
         return v ? v.map((x) => parse(x.value)) : [];
     }
 
+    /**
+     * Get all keys and values in tuple form
+     */
     async entries(limit?: number): Promise<[string, any][]> {
         if (limit && isNaN(limit))
             throw new TypeError('The limit must be a number');
