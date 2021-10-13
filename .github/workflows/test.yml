@@ -1,22 +1,27 @@
 name: Tests
 
-on: [push, pull_request]
+on:
+  push:
+    branches: [ main ]
+  
+  pull_request:
+    branches: '*'
 
 jobs:
   test:
-    name: Test on NodeJS v12
+    name: Test on NodeJS v16
     runs-on: ubuntu-latest
 
     steps:
       - uses: actions/checkout@v2
-      - name: Use Node.js v12
+      - name: Use Node.js v16
         uses: actions/setup-node@v1
         with:
-          node-version: "12.x"
+          node-version: "16.x"
       - run: npm i
       - run: npm test
         env:
-          host: "db.oxova.host"
-          database: "mykv"
-          user: "mykv"
-          password: ${{ secrets.DB_PASSWORD }}
+          DB_HOST: "db.oxova.host"
+          DB_DATABASE: "mykv"
+          DB_USERNAME: "mykv"
+          DB_PASSWORD: ${{ secrets.DB_PASSWORD }}
