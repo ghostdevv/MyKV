@@ -40,7 +40,7 @@
     },
     "optionalDependencies": {
         "mysql": "^2.18.1",
-        "pg": "^8.7.1",
+        "pg": "^8.7.3",
         "sqlite3": "^5.0.2"
     },
     "license": "MIT",
