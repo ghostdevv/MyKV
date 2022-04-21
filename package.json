@@ -36,7 +36,7 @@
     "dependencies": {
         "configent": "^2.2.0",
         "json-buffer": "^3.0.0",
-        "knex": "^1.0.5"
+        "knex": "^1.0.7"
     },
     "optionalDependencies": {
         "mysql": "^2.18.1",
